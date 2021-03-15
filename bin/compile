@@ -52,7 +52,7 @@ cd $THIS_DIR
 indent "Saving environment setup script..."
 mkdir -p $PROFILE_D_DIR
 
-ORACLE_HOME="/app/vendor/oracle/instantclient_21_1"
+ORACLE_HOME="/app/oracle_data"
 
 cat << EOF > $PROFILE_D_DIR/oracle.sh
 #!/usr/bin/env bash
