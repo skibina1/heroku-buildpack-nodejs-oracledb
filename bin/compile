@@ -49,7 +49,7 @@ cd $BUILD_DIR
 npm install oracledb
 cd $THIS_DIR
 
-ORACLE_NETWORK_ADMIN_DIR="vendor/oracle/instantclient_21_1/network/admin"
+ORACLE_NETWORK_ADMIN_DIR="dupa/network/admin"
 mkdir -p ${ORACLE_NETWORK_ADMIN_DIR}
 
 if [[ -s $ORACLE_CONFIG ]]; then
