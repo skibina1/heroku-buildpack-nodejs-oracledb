@@ -55,13 +55,13 @@ mkdir -p ${ORACLE_NETWORK_ADMIN_DIR}
 if [[ -s $ORACLE_CONFIG ]]; then
   TNSNAMES_FILENAME=$(grep tnsnames.ora $ORACLE_CONFIG | cut -d' ' -f2)
   if [[ -f $BUILD_DIR/$TNSNAMES_FILENAME ]]; then
-    indent "Symlinking ${TNSNAMES_FILENAME} to ${INSTANTCLIENT_DIR}/network/admin/tnsnames.ora"
+    indent "Symlinking ${TNSNAMES_FILENAME} to ${ORACLE_NETWORK_ADMIN_DIR}/tnsnames.ora"
     ln -sf $BUILD_DIR/$TNSNAMES_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/tnsnames.ora
   fi
 
   SQLNET_FILENAME=$(grep sqlnet.ora $ORACLE_CONFIG | cut -d' ' -f2)
   if [[ -f $BUILD_DIR/$SQLNET_FILENAME ]]; then
-    indent "Symlinking ${SQLNET_FILENAME} to ${INSTANTCLIENT_DIR}/network/admin/sqlnet.ora"
+    indent "Symlinking ${SQLNET_FILENAME} to ${ORACLE_NETWORK_ADMIN_DIR}/sqlnet.ora"
     ln -sf $BUILD_DIR/$SQLNET_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/sqlnet.ora
   fi
 fi
