@@ -49,7 +49,7 @@ cd $BUILD_DIR
 npm install oracledb
 cd $THIS_DIR
 
-ORACLE_NETWORK_ADMIN_DIR="${BUILD_DIR}/${INSTANTCLIENT_DIR}/network/admin"
+ORACLE_NETWORK_ADMIN_DIR="/app/vendor/oracle/instantclient_21_1/network/admin"
 mkdir -p ${ORACLE_NETWORK_ADMIN_DIR}
 
 if [[ -s $ORACLE_CONFIG ]]; then
@@ -69,12 +69,12 @@ fi
 indent "Saving environment setup script..."
 mkdir -p $PROFILE_D_DIR
 
-ORACLE_HOME="/app/${INSTANTCLIENT_DIR}"
+ORACLE_HOME="/app/vendor/oracle/instantclient_21_1"
 
 cat << EOF > $PROFILE_D_DIR/oracle.sh
 #!/usr/bin/env bash
 export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:$HOME/.apt/lib/x86_64-linux-gnu:$HOME/vendor/oracle/instantclient_21_1"
-export TNS_ADMIN=${ORACLE_HOME}/network/admin
+export TNS_ADMIN=${ORACLE_NETWORK_ADMIN_DIR}
 EOF
 
 indent "Done."
