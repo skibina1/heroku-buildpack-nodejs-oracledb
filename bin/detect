@@ -4,6 +4,15 @@
 if [ -f $1/package.json ]; then
   echo "Node.js with OracleDB"
   exit 0
+else
+  exit 1
 fi
 
-exit 1
+# this builpack is valid for apps with a .oracle.yml in the root
+if [ -f $1/.oracle.yml ]; then
+  echo "Oracle"
+  exit 0
+else
+  exit 1
+fi
+

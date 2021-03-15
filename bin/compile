@@ -13,6 +13,7 @@ VENDOR_DIR=$BUILD_DIR/vendor
 ORACLE_DIR=$VENDOR_DIR/oracle
 INSTANTCLIENT_DIR=$ORACLE_DIR/instantclient_21_1
 PROFILE_D_DIR=$BUILD_DIR/.profile.d
+ORACLE_CONFIG="${BUILD_DIR}/.oracle.yml"
 
 BASIC_FILENAME=instantclient-basic-linux.x64-21.1.0.0.0.zip
 SDK_FILENAME=instantclient-sdk-linux.x64-21.1.0.0.0.zip
@@ -48,11 +49,32 @@ cd $BUILD_DIR
 npm install oracledb
 cd $THIS_DIR
 
+ORACLE_NETWORK_ADMIN_DIR="${BUILD_DIR}/${INSTANTCLIENT_DIR}/network/admin"
+mkdir -p ${ORACLE_NETWORK_ADMIN_DIR}
+
+if [[ -s $ORACLE_CONFIG ]]; then
+  TNSNAMES_FILENAME=$(grep tnsnames.ora $ORACLE_CONFIG | cut -d' ' -f2)
+  if [[ -f $BUILD_DIR/$TNSNAMES_FILENAME ]]; then
+    indent "Symlinking ${TNSNAMES_FILENAME} to ${INSTANTCLIENT_DIR}/network/admin/tnsnames.ora"
+    ln -sf $BUILD_DIR/$TNSNAMES_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/tnsnames.ora
+  fi
+
+  SQLNET_FILENAME=$(grep sqlnet.ora $ORACLE_CONFIG | cut -d' ' -f2)
+  if [[ -f $BUILD_DIR/$SQLNET_FILENAME ]]; then
+    indent "Symlinking ${SQLNET_FILENAME} to ${INSTANTCLIENT_DIR}/network/admin/sqlnet.ora"
+    ln -sf $BUILD_DIR/$SQLNET_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/sqlnet.ora
+  fi
+fi
+
 indent "Saving environment setup script..."
 mkdir -p $PROFILE_D_DIR
+
+ORACLE_HOME="/app/${INSTANTCLIENT_DIR}"
+
 cat << EOF > $PROFILE_D_DIR/oracle.sh
 #!/usr/bin/env bash
 export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:$HOME/.apt/lib/x86_64-linux-gnu:$HOME/vendor/oracle/instantclient_21_1"
+export TNS_ADMIN=${ORACLE_HOME}/network/admin
 EOF
 
 indent "Done."
