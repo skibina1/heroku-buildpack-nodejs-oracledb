@@ -56,7 +56,7 @@ ORACLE_HOME="/app/oracle_data"
 
 cat << EOF > $PROFILE_D_DIR/oracle.sh
 #!/usr/bin/env bash
-export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:$HOME/.apt/lib/x86_64-linux-gnu:$HOME/vendor/oracle/instantclient_21_1"
+export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:\$HOME/.apt/lib/x86_64-linux-gnu:\$HOME/vendor/oracle/instantclient_21_1"
 export TNS_ADMIN=${ORACLE_HOME}
 EOF
 
